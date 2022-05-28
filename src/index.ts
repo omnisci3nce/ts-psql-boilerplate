@@ -2,8 +2,6 @@ import express, { Request, Response, Router } from 'express';
 
 import UsersRepository from './users.repo';
 
-
-
 const usersRepo = new UsersRepository();
 
 const app = express();
@@ -11,7 +9,8 @@ const app = express();
 const userRouter = Router();
 userRouter.get('/', async (req: Request, res: Response) => {
   // TODO: service layer here
-  const users = usersRepo.getAll();
+  const users = await usersRepo.getAll();
+  console.log(users);
   return res.json({ users });
 });
 

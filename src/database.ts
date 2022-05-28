@@ -16,4 +16,6 @@ const connectToDb = async () => {
   }
 };
 
-export { connectToDb }
+const connect = connectToDb;
+
+export { connect }

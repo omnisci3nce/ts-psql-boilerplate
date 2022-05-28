@@ -11,12 +11,13 @@ const auditCols = {
 
 export const UserDbSchema = z.object({
   id: z.number(),
-  role: z.enum(roles),
-  username: z.string().max(20),
-  email: z.string().max(80),
-  salt: z.string().max(32),
-  encrypted_password: z.string().max(64),
-  ...auditCols
+  name: z.string(),
+  // role: z.enum(roles),
+  // username: z.string().max(20),
+  // email: z.string().max(80),
+  // salt: z.string().max(32),
+  // encrypted_password: z.string().max(64),
+  // ...auditCols
 });
 
 export const UserDbDetails = z.object({
@@ -28,10 +29,13 @@ export const UserDbDetails = z.object({
 });
 
 export const UserSchema = UserDbSchema.transform(
-  ({ encrypted_password, ...rest }) => ({
+  // ({ encrypted_password, ...rest }) => ({
+  //   ...rest,
+  //   // map db names to runtime names
+  //   encryptedPassword: encrypted_password,
+  // })
+  ({ ...rest }) => ({
     ...rest,
-    // map db names to runtime names
-    encryptedPassword: encrypted_password,
   })
 );
 

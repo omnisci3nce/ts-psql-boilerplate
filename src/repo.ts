@@ -1,5 +1,5 @@
 import { table } from 'console';
-import { connectToDb } from './db';
+import { connect } from './database';
 
 export interface IRepo<T, D> {
   getAll(): Promise<T[]>;
@@ -29,7 +29,7 @@ export default class Repo<T, D> implements IRepo<T, D> {
   }
 
   async getAll(): Promise<T[]> {
-    const db = await connectToDb();
+    const db = await connect();
     if (!db) throw new Error('Couldnt get db');
     const rows = await db.query(`SELECT * from ${this.tableName}`).then((res) => res.rows);
     return rows.map(row => this.schema.parse(row));

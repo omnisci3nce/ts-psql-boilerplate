@@ -6,7 +6,7 @@ export default class UsersRepository extends Repo<
   UserDetails
 > {
   constructor() {
-    super('users', UserSchema, UserDetailsSchema);
+    super('public.users', UserSchema, UserDetailsSchema);
   }
 
   async getByUsername(username: string): Promise<User | undefined> {
