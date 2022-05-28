@@ -1,5 +1,5 @@
 import Repo from './repo';
-import { User, UserDetails, UserDetailsSchema, UserSchema } from "./user";
+import { User, UserDetails, UserDetailsSchema, UserSchema } from './user';
 
 export default class UsersRepository extends Repo<
   User,

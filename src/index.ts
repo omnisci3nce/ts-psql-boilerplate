@@ -1,30 +1,22 @@
-import express, { Request, Response } from "express";
-import { Pool } from "pg";
-import Repo from "./repo";
+import express, { Request, Response, Router } from 'express';
 
-const pool = new Pool({
-  host: "localhost",
-  user: "postgres",
-  database: "postgres",
-  password: "docker",
-  port: Number(process.env.DB_PORT || "5432")
-});
+import UsersRepository from './users.repo';
 
-const connectToDB = async () => {
-  try {
-    await pool.connect();
-  } catch (err) {
-    console.error(err);
-  }
-};
-connectToDB();
+
+
+const usersRepo = new UsersRepository();
 
 const app = express();
 
-app.get("/test", (req: Request, res: Response) => {
-  res.send("hi");
+const userRouter = Router();
+userRouter.get('/', async (req: Request, res: Response) => {
+  // TODO: service layer here
+  const users = usersRepo.getAll();
+  return res.json({ users });
 });
 
+app.use('/users', userRouter);
+
 app.listen(8000, () => {
-  console.log("Server is running on port 8000");
+  console.log('Server is running on port 8000');
 });
