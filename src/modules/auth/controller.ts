@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express'
 import UsersRepository from '../users/repo'
 import bcrypt from 'bcrypt'
+import Logger from '../../lib/logger'
 
 declare module 'express-session' {
   interface SessionData {
@@ -27,7 +28,7 @@ router.post('/login', async (req: Request, res: Response) => {
 
 router.get('/logout', async (req: Request, res: Response) => {
   req.session.destroy((err) => {
-    if (err) console.error(err)
+    if (err) Logger.error(err)
   })
   res.redirect('/')
 })

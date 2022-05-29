@@ -1,5 +1,6 @@
 import { Pool } from 'pg'
 import 'dotenv/config'
+import Logger from './lib/logger'
 
 const pool = new Pool({
   host: process.env.POSTGRES_HOST || 'localhost',
@@ -13,7 +14,7 @@ const connectToDb = async () => {
   try {
     return pool.connect()
   } catch (err) {
-    console.error(err)
+    Logger.error(err)
   }
 }
 
