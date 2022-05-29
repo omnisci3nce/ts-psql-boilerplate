@@ -2,6 +2,7 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node build/index.js",
+    "dev": "nodemon -e ts  --exec \"npm run start\"",
     "lint": "eslint ./src --ext .ts --fix"
   },
   "devDependencies": {
@@ -19,6 +20,7 @@
     "bcrypt": "^5.0.1",
     "express": "^4.18.1",
     "helmet": "^5.1.0",
+    "nodemon": "^2.0.16",
     "pg": "^8.7.3",
     "zod": "^3.17.3"
   }

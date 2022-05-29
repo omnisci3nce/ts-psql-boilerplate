@@ -14,14 +14,8 @@ export default class UsersRepository extends CRUD<
     const db = await connect();
     if (!db) throw new Error('Couldnt get db');
     const result = await db.query({ text: `SELECT * FROM ${this.tableName} WHERE username = $1`, values: [username] });
-    return result.rows[0];
+    const user = UserDbSchema.parse(result.rows[0]);
+    return user;
   }
 
-  async getAllAdmins(): Promise<User[]> {
-    // const result = await sql.query(`
-    //   select * from ${this.tableName}
-    //   where role = 'admin'
-    // `);
-    return [];
-  }
 }
