@@ -1,4 +1,5 @@
 import express, { Request, Response, Router } from 'express';
+import helmet from 'helmet';
 import { UserDbDetails } from './user';
 import { validateBody } from './middlewares/validation';
 import bcrypt from 'bcrypt';
@@ -9,6 +10,7 @@ import { z } from 'zod';
 const usersRepo = new UsersRepository();
 
 const app = express();
+app.use(helmet());
 app.use(express.json());
 
 const userParamsSchema = z.object({
