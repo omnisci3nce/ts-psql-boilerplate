@@ -1,26 +1,26 @@
-import CRUD from '../../helpers/crud';
-import { User, UserDbDetails, UserDbSchema, UserDetails } from './user';
-import { connect } from '../../database';
+import CRUD from '../../lib/crud'
+import { User, UserDbDetails, UserDbSchema, UserDetails } from './user'
+import { connect } from '../../database'
 
 export default class UsersRepository extends CRUD<
   User,
   UserDetails
 > {
   constructor() {
-    super('public.users', UserDbSchema, UserDbDetails);
+    super('public.users', UserDbSchema, UserDbDetails)
   }
 
   async getByUsername(username: string): Promise<User> {
-    const db = await connect();
-    if (!db) throw new Error('Couldnt get db');
-    const result = await db.query({ text: `SELECT * FROM ${this.tableName} WHERE username = $1`, values: [username] });
-    const user = UserDbSchema.parse(result.rows[0]);
-    return user;
+    const db = await connect()
+    if (!db) throw new Error('Couldnt get db')
+    const result = await db.query({ text: `SELECT * FROM ${this.tableName} WHERE username = $1`, values: [username] })
+    const user = UserDbSchema.parse(result.rows[0])
+    return user
   }
 
   async update(id: string, details: { email: string }): Promise<void> {
-    const db = await connect();
-    if (!db) throw new Error('Couldnt get db');
+    const db = await connect()
+    if (!db) throw new Error('Couldnt get db')
 
     const query = {
       text: `
@@ -28,8 +28,8 @@ export default class UsersRepository extends CRUD<
           email = $2
         WHERE id = $1;`,
       values: [id, details.email]
-    };
+    }
 
-    await db.query(query);
+    await db.query(query)
   }
 }
