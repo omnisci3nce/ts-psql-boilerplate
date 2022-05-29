@@ -32,6 +32,13 @@ router.post('/', validateBody(userParamsSchema), async (req: Request, res: Respo
   const userId = await usersRepo.create({ username, email, encrypted_password: hashedPassword })
   return res.json(userId);
 });
+
+router.put('/:id', validateBody(z.object({ email: z.string().max(80) })), async (req: Request, res: Response) => {
+  const { email } = req.body;
+  await usersRepo.update(req.params.id, { email });
+  return res.status(200).end();
+});
+
 router.delete('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   await usersRepo.delete(id);

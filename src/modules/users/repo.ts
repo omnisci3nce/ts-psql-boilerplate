@@ -1,5 +1,5 @@
-import CRUD from '../../crud';
-import { User, UserDbDetails, UserDbSchema, UserDetails, UserDetailsSchema, UserSchema } from './user';
+import CRUD from '../../helpers/crud';
+import { User, UserDbDetails, UserDbSchema, UserDetails } from './user';
 import { connect } from '../../database';
 
 export default class UsersRepository extends CRUD<
@@ -18,4 +18,18 @@ export default class UsersRepository extends CRUD<
     return user;
   }
 
+  async update(id: string, details: { email: string }): Promise<void> {
+    const db = await connect();
+    if (!db) throw new Error('Couldnt get db');
+
+    const query = {
+      text: `
+        UPDATE ${this.tableName} SET
+          email = $2
+        WHERE id = $1;`,
+      values: [id, details.email]
+    };
+
+    await db.query(query);
+  }
 }

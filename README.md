@@ -25,4 +25,6 @@ pgadmin
 
 `docker run --name pg_dashboard -p 5488:80 -e PGADMIN_DEFAULT_EMAIL=josh@josh.com -e PGADMIN_DEFAULT_PASSWORD=josh -d dpage/pgadmin4`
 
-docker run --rm -it --network=host -v "$(pwd)/db:/db" -e DATABASE_URL="postgres://postgres:docker@localhost/postgres?sslmode=disable" amacneil/dbmate up
+dbmate
+
+`docker run --rm -it --network=host -v "$(pwd)/db:/db" -e DATABASE_URL="postgres://postgres:docker@localhost/postgres?sslmode=disable" amacneil/dbmate up`
