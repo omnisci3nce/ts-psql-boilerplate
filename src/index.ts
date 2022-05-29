@@ -5,7 +5,9 @@ import UsersRepository from './users.repo';
 const usersRepo = new UsersRepository();
 
 const app = express();
+app.use(express.json());
 
+/* User Routes */
 const userRouter = Router();
 userRouter.get('/', async (req: Request, res: Response) => {
   // TODO: service layer here
@@ -13,6 +15,20 @@ userRouter.get('/', async (req: Request, res: Response) => {
   console.log(users);
   return res.json({ users });
 });
+
+userRouter.get('/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const user = await usersRepo.getOne(id);
+  return res.json(user);
+});
+userRouter.post('/', async (req: Request, res: Response) => {
+  console.log(req.body);
+  const { name, email } = req.body;
+  const userId = await usersRepo.create({ name, email })
+  return res.json(userId);
+});
+
+
 
 app.use('/users', userRouter);
 

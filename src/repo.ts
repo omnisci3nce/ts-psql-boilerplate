@@ -36,11 +36,29 @@ export default class Repo<T, D> implements IRepo<T, D> {
   }
 
   async getOne(id: string): Promise<T | undefined> {
-    return undefined;
+    const db = await connect();
+    if (!db) throw new Error('Couldnt get db');
+    const result = await db.query(`SELECT * from ${this.tableName} WHERE id = ${id}`);
+    return this.schema.parse(result.rows[0]);
   }
 
   async create(data: D): Promise<number> {
-    return 1;
+    const db = await connect();
+    if (!db) throw new Error('Couldnt get db');
+
+    this.detailsSchema.parse(data);
+
+    const columns = Object.keys(data);
+    const values = Object.values(data);
+
+    const query = `
+    INSERT INTO ${this.tableName} (${columns.join(', ')})
+    VALUES (${values.map((v) => `'${v}'`).join(',')})
+    RETURNING id;`;
+    console.log('query: ', query);
+    const result = await db.query(query);
+
+    return result.rows[0].id;
   }
 
   async delete(id: string): Promise<void> {

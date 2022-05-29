@@ -21,11 +21,12 @@ export const UserDbSchema = z.object({
 });
 
 export const UserDbDetails = z.object({
-  role: z.enum(roles),
-  username: z.string().max(20),
+  // role: z.enum(roles),
+  // username: z.string().max(20),
+  name: z.string(),
   email: z.string().max(80),
-  salt: z.string().max(32),
-  encrypted_password: z.string().max(64),
+  // salt: z.string().max(32),
+  // encrypted_password: z.string().max(64),
 });
 
 export const UserSchema = UserDbSchema.transform(
@@ -40,10 +41,11 @@ export const UserSchema = UserDbSchema.transform(
 );
 
 export const UserDetailsSchema = UserDbDetails.transform(
-  ({ encrypted_password, ...rest }) => ({
+  // ({ encrypted_password, ...rest }) => ({
+    ({ ...rest }) => ({
     ...rest,
     // map db names to runtime names
-    encryptedPassword: encrypted_password,
+    // encryptedPassword: encrypted_password,
   })
 );
 
