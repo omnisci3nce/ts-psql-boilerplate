@@ -3,6 +3,7 @@ import UsersRepository from './repo';
 import { z } from 'zod';
 import { validateBody } from '../../middlewares/validation';
 import bcrypt from 'bcrypt';
+import { authenticate } from '../../middlewares/authentication';
 
 const userParamsSchema = z.object({
   username: z.string().max(20),
@@ -14,7 +15,7 @@ const usersRepo = new UsersRepository();
 
 const router = Router();
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', authenticate, async (req: Request, res: Response) => {
   const users = await usersRepo.getAll();
   return res.json(users);
 });
@@ -25,7 +26,6 @@ router.get('/:id', async (req: Request, res: Response) => {
   return res.json(user);
 });
 router.post('/', validateBody(userParamsSchema), async (req: Request, res: Response) => {
-  console.log(req.body);
   const { username, email, password } = req.body;
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
