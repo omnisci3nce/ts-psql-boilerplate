@@ -27,7 +27,11 @@ userRouter.post('/', async (req: Request, res: Response) => {
   const userId = await usersRepo.create({ name, email })
   return res.json(userId);
 });
-
+userRouter.delete('/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  await usersRepo.delete(id);
+  return res.status(200).end();
+})
 
 
 app.use('/users', userRouter);

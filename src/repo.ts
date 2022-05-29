@@ -62,6 +62,9 @@ export default class Repo<T, D> implements IRepo<T, D> {
   }
 
   async delete(id: string): Promise<void> {
-    // 
+    const db = await connect();
+    if (!db) throw new Error('Couldnt get db');
+
+    await db.query(`DELETE FROM ${this.tableName} WHERE id = ${id};`);
   }
 }
