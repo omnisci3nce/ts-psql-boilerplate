@@ -1,8 +1,19 @@
 # postgresql-repo
 
+Boilerplate for Node.js using Typescript, Express, and PostgreSQL project.
+
 ## Features
 
 - Generic CRUD for easy setup of new entities (see: `src/crud.ts`)
+
+**Features Brainstorm:**
+
+- Database Migrations
+- Login / Authentication
+- Authorisation
+  - RBAC
+  - ABAC
+
 
 ## Setup
 
