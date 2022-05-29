@@ -3,24 +3,24 @@
     "build": "tsc",
     "start": "npm run build && node build/index.js",
     "dev": "nodemon -e ts  --exec \"npm run start\"",
-    "test": "tap --ts",
+    "test": "jest",
     "lint": "eslint ./src --ext .ts --fix"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
     "@types/express-session": "^1.17.4",
+    "@types/jest": "^27.5.1",
     "@types/morgan": "^1.9.3",
     "@types/node": "^17.0.35",
     "@types/pg": "^8.6.5",
-    "@types/tap": "^15.0.7",
     "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
     "dotenv": "^16.0.1",
     "eslint": "^8.16.0",
-    "tap": "^16.2.0",
-    "ts-node": "^10.8.0",
+    "jest": "^28.1.0",
+    "ts-jest": "^28.0.3",
     "typescript": "^4.7.2"
   },
   "dependencies": {
