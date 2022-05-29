@@ -1,54 +1,38 @@
 import { z } from 'zod';
 
-const roles = ['admin', 'sales', 'engineering'] as const;
-
-const auditCols = {
-  created_at: z.number(),
-  created_by: z.number(),
-  updated_at: z.number(),
-  updated_by: z.number(),
-}
-
 export const UserDbSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  // role: z.enum(roles),
-  // username: z.string().max(20),
-  // email: z.string().max(80),
-  // salt: z.string().max(32),
-  // encrypted_password: z.string().max(64),
-  // ...auditCols
+  id: z.string(),
+  username: z.string().max(20),
+  email: z.string().max(80),
+  encrypted_password: z.string().max(64),
+  created_at: z.date(),
+  updated_at: z.date(),
 });
 
 export const UserDbDetails = z.object({
-  // role: z.enum(roles),
-  // username: z.string().max(20),
-  name: z.string(),
+  username: z.string().max(20),
   email: z.string().max(80),
-  // salt: z.string().max(32),
-  // encrypted_password: z.string().max(64),
+  encrypted_password: z.string().max(64),
 });
 
 export const UserSchema = UserDbSchema.transform(
-  // ({ encrypted_password, ...rest }) => ({
-  //   ...rest,
-  //   // map db names to runtime names
-  //   encryptedPassword: encrypted_password,
-  // })
-  ({ ...rest }) => ({
+  ({ encrypted_password, created_at, updated_at, ...rest }) => ({
     ...rest,
+    // map db names to runtime names
+    encryptedPassword: encrypted_password,
+    createdAt: created_at,
+    updatedAt: updated_at
   })
 );
 
 export const UserDetailsSchema = UserDbDetails.transform(
-  // ({ encrypted_password, ...rest }) => ({
-    ({ ...rest }) => ({
+  ({ encrypted_password, ...rest }) => ({
     ...rest,
     // map db names to runtime names
-    // encryptedPassword: encrypted_password,
+    encryptedPassword: encrypted_password,
   })
 );
 
-export type UserDetails = z.infer<typeof UserDetailsSchema>;
+export type UserDetails = z.infer<typeof UserDbDetails>;
 
-export type User = z.infer<typeof UserSchema>;
+export type User = z.infer<typeof UserDbSchema>;

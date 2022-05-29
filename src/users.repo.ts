@@ -1,12 +1,12 @@
 import CRUD from './crud';
-import { User, UserDetails, UserDetailsSchema, UserSchema } from './user';
+import { User, UserDbDetails, UserDbSchema, UserDetails, UserDetailsSchema, UserSchema } from './user';
 
 export default class UsersRepository extends CRUD<
   User,
   UserDetails
 > {
   constructor() {
-    super('public.users', UserSchema, UserDetailsSchema);
+    super('public.users', UserDbSchema, UserDbDetails);
   }
 
   async getByUsername(username: string): Promise<User | undefined> {

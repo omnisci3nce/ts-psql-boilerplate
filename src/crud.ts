@@ -1,4 +1,5 @@
 import { table } from 'console';
+import { z, AnyZodObject } from 'zod';
 import { connect } from './database';
 
 export interface IRepo<T, D> {
@@ -46,7 +47,8 @@ export default class CRUD<T, D> implements IRepo<T, D> {
     const db = await connect();
     if (!db) throw new Error('Couldnt get db');
 
-    this.detailsSchema.parse(data);
+    // this.detailsSchema.parse(data);
+    // const values = this.detailsSchema.parse(data);
 
     const columns = Object.keys(data);
     const values = Object.values(data);
