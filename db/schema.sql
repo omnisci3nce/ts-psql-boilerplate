@@ -33,7 +33,7 @@ CREATE TABLE public.users (
     encrypted_password character varying(64) NOT NULL,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
     updated_at timestamp without time zone DEFAULT now() NOT NULL,
-    deleted integer DEFAULT 0 NOT NULL
+    deleted boolean DEFAULT false NOT NULL
 );
 
 

@@ -7,6 +7,7 @@ export const UserDbSchema = z.object({
   encrypted_password: z.string().max(64),
   created_at: z.date(),
   updated_at: z.date(),
+  deleted: z.boolean()
 });
 
 export const UserDbDetails = z.object({

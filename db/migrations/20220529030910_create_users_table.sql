@@ -13,7 +13,7 @@ create table users (
   updated_at timestamp not null default now(),
 
   -- soft delete
-  deleted integer not null default 0
+  deleted boolean not null default false
 );
 
 -- migrate:down

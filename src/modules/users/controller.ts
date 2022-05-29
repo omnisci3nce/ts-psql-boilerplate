@@ -15,7 +15,7 @@ const usersRepo = new UsersRepository();
 
 const router = Router();
 
-router.get('/', authenticate, async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
   const users = await usersRepo.getAll();
   return res.json(users);
 });

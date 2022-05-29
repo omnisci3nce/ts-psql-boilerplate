@@ -1,7 +1,6 @@
 import express from 'express';
 import helmet from 'helmet';
 import session from 'express-session';
-
 import routes from './routes';
 
 const app = express();

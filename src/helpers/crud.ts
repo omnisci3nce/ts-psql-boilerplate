@@ -12,25 +12,35 @@ export interface Validator<T> {
   parse: (obj: T) => T;
 }
 
+export interface CRUDOptions {
+  softDelete: boolean;
+}
+export const defaultOptions: CRUDOptions = {
+  softDelete: true
+}
+
 export default class CRUD<T, D extends Record<string, string | number>> implements IRepo<T, D> {
   tableName: string;
   schema: Validator<T>;
   detailsSchema: Validator<D>;
+  options: CRUDOptions
 
   constructor(
     tableName: string,
     schema: Validator<T>,
-    detailsSchema: Validator<D>
+    detailsSchema: Validator<D>,
+    options?: CRUDOptions
   ) {
     this.tableName = tableName;
     this.schema = schema;
     this.detailsSchema = detailsSchema;
+    this.options = options ? { ...defaultOptions, ...options } : defaultOptions;
   }
 
   async getAll(): Promise<T[]> {
     const db = await connect();
     if (!db) throw new Error('Couldnt get db');
-    const rows = await db.query(`SELECT * from ${this.tableName}`).then((res) => res.rows);
+    const rows = await db.query(`SELECT * from ${this.tableName};`).then((res) => res.rows);
     return rows.map(row => this.schema.parse(row));
   }
 
@@ -80,6 +90,10 @@ export default class CRUD<T, D extends Record<string, string | number>> implemen
     const db = await connect();
     if (!db) throw new Error('Couldnt get db');
 
-    await db.query(`DELETE FROM ${this.tableName} WHERE id = ${id};`);
+    if (this.options.softDelete) {
+      await db.query(`UPDATE ${this.tableName} SET deleted = true WHERE id = ${id}`);
+    } else {
+      await db.query(`DELETE FROM ${this.tableName} WHERE id = ${id};`);
+    }
   }
 }
