@@ -1,7 +1,7 @@
-import Repo from './repo';
+import CRUD from './crud';
 import { User, UserDetails, UserDetailsSchema, UserSchema } from './user';
 
-export default class UsersRepository extends Repo<
+export default class UsersRepository extends CRUD<
   User,
   UserDetails
 > {

@@ -13,7 +13,7 @@ export interface Validator<T> {
   parse: (obj: T) => T;
 }
 
-export default class Repo<T, D> implements IRepo<T, D> {
+export default class CRUD<T, D> implements IRepo<T, D> {
   tableName: string;
   schema: Validator<T>;
   detailsSchema: Validator<D>;
@@ -55,7 +55,6 @@ export default class Repo<T, D> implements IRepo<T, D> {
     INSERT INTO ${this.tableName} (${columns.join(', ')})
     VALUES (${values.map((v) => `'${v}'`).join(',')})
     RETURNING id;`;
-    console.log('query: ', query);
     const result = await db.query(query);
 
     return result.rows[0].id;
