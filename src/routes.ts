@@ -1,5 +1,5 @@
-import userRouter from './modules/users/controller'
-import authRouter from './modules/auth/controller'
+import userRouter from './modules/users/users.controller'
+import authRouter from './modules/auth/auth.controller'
 import { Router } from 'express'
 
 const router = Router()

@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express'
-import UsersRepository from './repo'
+import UsersRepository from './users.repository'
 import { z } from 'zod'
 import { validateBody } from '../../middlewares/validation'
 import bcrypt from 'bcrypt'

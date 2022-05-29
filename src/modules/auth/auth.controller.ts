@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express'
-import UsersRepository from '../users/repo'
+import UsersRepository from '../users/users.repository'
 import bcrypt from 'bcrypt'
 import Logger from '../../lib/logger'
 
