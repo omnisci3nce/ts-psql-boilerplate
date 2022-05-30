@@ -13,9 +13,11 @@ Boilerplate for Node.js using Typescript, Express, and PostgreSQL project.
 - Authorisation
   - RBAC
   - ABAC
+- Pagination & Filterting (abstraction)
 - Logging
 - Telemetry / monitoring
 - Comprehensive testing (E2E, integration, unit)
+- Live notifications
 
 ## Setup
 
