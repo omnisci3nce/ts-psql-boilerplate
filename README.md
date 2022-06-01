@@ -1,6 +1,4 @@
-# Cobalt Backend
-
-Based on boilerplate here https://github.com/omnisci3nce/postgresql-repo
+# Boilerplate
 
 ## Features
 
