@@ -1,25 +1,12 @@
-# postgresql-repo
+# Cobalt Backend
 
-Boilerplate for Node.js using Typescript, Express, and PostgreSQL project.
+Based on boilerplate here https://github.com/omnisci3nce/postgresql-repo
 
 ## Features
 
 - Generic CRUD for easy setup of new entities (see: `src/crud.ts`)
 
-**Features Brainstorm:**
-
-- Database Migrations
-- Login / Authentication
-- Authorisation
-  - RBAC
-  - ABAC
-- Logging
-- Telemetry / monitoring
-- Comprehensive testing (E2E, integration, unit)
-
 ## Setup
-
-### Dev Env (docker)
 
 postgres
 
@@ -32,5 +19,3 @@ pgadmin
 dbmate
 
 `docker run --rm -it --network=host -v "$(pwd)/db:/db" -e DATABASE_URL="postgres://postgres:docker@localhost/postgres?sslmode=disable" amacneil/dbmate up`
-
-### Environment Variables

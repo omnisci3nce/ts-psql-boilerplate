@@ -1,39 +1,30 @@
 import { z } from 'zod'
+import { PrimaryKey, AuditSchema, SoftDeleteSchema } from '../../lib/common'
 
-export const UserDbSchema = z.object({
-  id: z.string(),
-  username: z.string().max(20),
+// --- Schemas
+
+export const UserUpdatableFieldsSchema = z.object({
   email: z.string().max(80),
-  encrypted_password: z.string().max(64),
-  created_at: z.date(),
-  updated_at: z.date(),
-  deleted: z.boolean()
 })
 
-export const UserDbDetails = z.object({
+export const UserNonUpdatableFieldsSchema = z.object({
   username: z.string().max(20),
-  email: z.string().max(80),
   encrypted_password: z.string().max(64),
 })
 
-export const UserSchema = UserDbSchema.transform(
-  ({ encrypted_password, created_at, updated_at, ...rest }) => ({
-    ...rest,
-    // map db names to runtime names
-    encryptedPassword: encrypted_password,
-    createdAt: created_at,
-    updatedAt: updated_at
-  })
-)
+export const UserDetailsSchema = UserNonUpdatableFieldsSchema.merge(UserUpdatableFieldsSchema)
 
-export const UserDetailsSchema = UserDbDetails.transform(
-  ({ encrypted_password, ...rest }) => ({
-    ...rest,
-    // map db names to runtime names
-    encryptedPassword: encrypted_password,
-  })
-)
+export const UserSchema = PrimaryKey.merge(UserUpdatableFieldsSchema).merge(UserNonUpdatableFieldsSchema).merge(AuditSchema).merge(SoftDeleteSchema)
 
-export type UserDetails = z.infer<typeof UserDbDetails>;
+// --- Types
 
-export type User = z.infer<typeof UserDbSchema>;
+export type UserUpdatableFields = z.infer<typeof UserUpdatableFieldsSchema>;
+export type UserNonUpdatableFields = z.infer<typeof UserNonUpdatableFieldsSchema>;
+
+export type UserDetails = UserUpdatableFields & UserNonUpdatableFields
+
+
+export type Audit = z.infer<typeof AuditSchema>
+export type SoftDelete = z.infer<typeof SoftDeleteSchema>
+
+export type User = z.infer<typeof UserSchema>
